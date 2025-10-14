@@ -1,0 +1,26 @@
+{
+  "name": "mail-server",
+  "version": "1.0.0",
+  "description": "form mail server",
+  "homepage": "https://github.com/360Parminder/mail-server#readme",
+  "bugs": {
+    "url": "https://github.com/360Parminder/mail-server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/360Parminder/mail-server.git"
+  },
+  "license": "ISC",
+  "author": "360Parminder",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "mailparser": "^3.7.5",
+    "nodemon": "^3.1.10",
+    "smtp-server": "^3.15.0"
+  }
+}
