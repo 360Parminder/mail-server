@@ -3,24 +3,21 @@ const simpleParser = require('mailparser').simpleParser;
 
 
 const server = new SMTPServer({
-  authOptional: true,
-  onData(stream, session, callback) {
-    simpleParser(stream)
-      .then(parsed => {
-        console.log('Received email:');
-        console.log('From:', parsed.from.text);
-        console.log('To:', parsed.to.text);
-        console.log('Subject:', parsed.subject);
-        console.log('Text body:', parsed.text);
-        console.log('HTML body:', parsed.html);
-      })
-      .catch(err => {
-        console.error('Error parsing email:', err);
-      })
-      .finally(() => {
-        callback();
-      });
+    allowInsecureAuth: true,
+    authOptional: true,
+  onConnect(session, callback) {
+    console.log('Client connected:', session.remoteAddress);
+    callback(); // Accept the connection
   },
+  onMailFrom(address, session, callback) {
+    console.log('Mail from:', address.address);
+    callback(); // Accept the sender
+  },
+  onRcptTo(address, session, callback) {
+    console.log('Recipient to:', address.address);
+    callback(); // Accept the recipient
+  },
+
 });
 
 server.listen(25, () => {
