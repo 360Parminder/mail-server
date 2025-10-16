@@ -6,7 +6,7 @@ const server = new SMTPServer({
   logger: true,
   secure: false, // Set true if using TLS (port 465)
   disabledCommands: ['STARTTLS'], // enable if you want to secure connection
-  authOptional: false, // require authentication to send mail
+  authOptional: true, // require authentication to send mail
   onConnect(session, callback) {
     console.log('Client connected:', session.remoteAddress);
     callback();
