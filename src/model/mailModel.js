@@ -9,8 +9,8 @@ const AttachmentSchema = new mongoose.Schema({
 
 const EmailSchema = new mongoose.Schema({
   messageId: { type: String, required: true, unique: true },
-  name: { type: String },                       // Optional display name
-  fromAddress: { type: String, required: true }, // actual email address of sender
+  name: { type: String },                             // Optional display name of sender
+  recipient: { type: String, required: true },
   from: { type: String, required: true },
   to: [{ type: String, required: true }],          // Support multiple recipients
   cc: [{ type: String }],
@@ -26,6 +26,7 @@ const EmailSchema = new mongoose.Schema({
   inReplyTo: { type: String },                     // messageId of the email replied to
   unread: { type: Boolean, default: true },
   flagged: { type: Boolean, default: false },
+  starred: { type: Boolean, default: false },
   labels: [{ type: String }],                      // for custom tags/labels
 }, { timestamps: true });
 

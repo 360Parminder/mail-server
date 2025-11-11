@@ -28,12 +28,12 @@ const server = new SMTPServer({
     async onRcptTo(address, session, callback) {
         try {
             const recipient = String(address.address || "").toLowerCase();
-            console.log("Recipient to:", recipient);
+            // console.log("Recipient to:", recipient);
 
-            const domain = recipient.split("@")[1];
-            if (!domain || !allowedDomains.includes(domain)) {
-                return callback(new Error("Recipient domain not allowed"));
-            }
+            // const domain = recipient.split("@")[1];
+            // if (!domain || !allowedDomains.includes(domain)) {
+            //     return callback(new Error("Recipient domain not allowed"));
+            // }
 
             // Validate user and cache for onData
             const user = await User.findOne({ email: recipient }).select("_id email").lean();
@@ -95,11 +95,12 @@ const server = new SMTPServer({
                 }
 
                 const savePromises = entries.map(async ([recipient, userId]) => {
+
                     const mail = new Mail({
                         name: parsed.from?.value?.[0]?.name || "", // optional display name
-                        fromAddress: fromAddr,
+                        recipient: recipient,
                         user: userId,
-                        from: parsed.from?.text || fromAddress,
+                        from:fromAddress,
                         to: toList.length ? toList : [recipient], // ensure recipient appears in 'to'
                         cc: ccList,
                         bcc: bccList,
