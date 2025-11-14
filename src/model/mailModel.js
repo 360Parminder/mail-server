@@ -20,7 +20,7 @@ const EmailSchema = new mongoose.Schema({
   html: { type: String },
   attachments: [AttachmentSchema],
   date: { type: Date, default: Date.now },         // Received/sent date
-  folder: { type: String, default: 'inbox' },      // inbox, sent, drafts, trash, spam, etc.
+  folder: { type: String, default: 'inbox',enum: ['inbox', 'sent', 'drafts', 'trash', 'spam', 'archive'] },      // inbox, sent, drafts, trash, spam, etc.
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // owner of the email
   threadId: { type: String },                      // for email threads/conversations
   inReplyTo: { type: String },                     // messageId of the email replied to
