@@ -9,7 +9,7 @@ const Email = require('./model/mailModel');
 
 const {
   SUBMIT_PORT = 587,
-  SUBMIT_HOST = '0.0.0.0',
+  SUBMIT_HOST = '192.168.1.40',
   MONGO_URI,
   MAX_SIZE = 25 * 1024 * 1024 // 25MB
 } = process.env;
@@ -32,7 +32,7 @@ function buildServer() {
     banner: 'Submission Service',
     size: Number(MAX_SIZE),
     secure: false,
-    disabledCommands: [], // allow STARTTLS if you terminate TLS at proxy set to ["STARTTLS"]
+    disabledCommands: ['STARTTLS'], // allow STARTTLS if you terminate TLS at proxy set to ["STARTTLS"]
     authOptional: false,
  socketTimeout: 2 * 60 * 1000,
     // Only AUTH PLAIN/LOGIN allowed by default; restrict mechanisms if needed
