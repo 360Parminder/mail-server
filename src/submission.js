@@ -33,7 +33,7 @@ function buildServer() {
     size: Number(MAX_SIZE),
     secure: false,
     disabledCommands: ['STARTTLS'], // allow STARTTLS if you terminate TLS at proxy set to ["STARTTLS"]
-    authOptional: false,
+    authOptional: true,
  socketTimeout: 2 * 60 * 1000,
     // Only AUTH PLAIN/LOGIN allowed by default; restrict mechanisms if needed
    onAuth: async (auth, session, callback) => {
