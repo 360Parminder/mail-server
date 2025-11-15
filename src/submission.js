@@ -37,6 +37,8 @@ function buildServer() {
  socketTimeout: 2 * 60 * 1000,
     // Only AUTH PLAIN/LOGIN allowed by default; restrict mechanisms if needed
    onAuth: async (auth, session, callback) => {
+    console.log(auth);
+    
   try {
     const { username, password } = auth;
     const u = (username || '').toLowerCase().trim();
