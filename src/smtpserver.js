@@ -1,7 +1,6 @@
 // /Users/parmindersingh/Downloads/Parminder/Projects/mail-server/src/smtpserver.js
 const { SMTPServer } = require("smtp-server");
 const { simpleParser } = require("mailparser");
-const mongoose = require("mongoose");
 const User = require("../src/model/userModel"); // must expose `email` field
 const Mail = require("../src/model/mailModel"); // must match mail schema
 
@@ -127,6 +126,9 @@ const server = new SMTPServer({
         });
     },
 });
+
+
+
 
 server.on("error", (err) => {
     console.error("SMTP server error:", err);
