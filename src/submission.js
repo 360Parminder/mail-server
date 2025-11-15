@@ -36,19 +36,26 @@ function buildServer() {
     authOptional: false,
  socketTimeout: 2 * 60 * 1000,
     // Only AUTH PLAIN/LOGIN allowed by default; restrict mechanisms if needed
-    onAuth: async (auth, session, callback) => {
-      try {
-        const { username, password } = auth;
-        const user = await User.findOne({ email: username.toLowerCase() }).lean();
-        if (!user) return callback(new Error('Invalid credentials'));
-        const ok = await bcrypt.compare(password, user.password);
-        if (!ok) return callback(new Error('Invalid credentials'));
-        session.user = { _id: user._id, email: user.email, aliases: user.aliases || [] };
-        return callback(null, { user: session.user });
-      } catch (e) {
-        return callback(new Error('Auth failed'));
-      }
-    },
+   onAuth: async (auth, session, callback) => {
+  try {
+    const { username, password } = auth;
+    const u = (username || '').toLowerCase().trim();
+    const user = await User.findOne({
+      $or: [{ email: u }, { aliases: u }]
+    }).lean();
+    console.log('AUTH attempt', { u, found: !!user });
+    if (!user) return callback(new Error('Invalid credentials'));
+    const ok = await bcrypt.compare(password || '', user.password || '');
+    console.log('AUTH bcrypt', ok);
+    if (!ok) return callback(new Error('Invalid credentials'));
+    session.user = { _id: user._id, email: user.email, aliases: user.aliases || [] };
+    return callback(null, { user: session.user });
+  } catch (e) {
+    console.error('AUTH exception', e);
+    return callback(new Error('Auth failed'));
+  }
+},
+
     onMailFrom: (address, session, callback) => {
       const from = (address.address || '').toLowerCase();
       const allowed = new Set([session.user.email, ...(session.user.aliases || [])]);
