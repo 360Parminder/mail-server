@@ -1,3 +1,17 @@
+const { SMTPServer } = require('smtp-server');
+const { simpleParser } = require('mailparser');
+const bcrypt = require('bcryptjs');
+const Email = require('./model/mailModel');
+const User = require('./model/userModel');
+
+
+const MAX_SIZE = process.env.SUBMIT_MAX_SIZE || (10 * 1024 * 1024); // 10 MB default
+
+const server = buildServer();
+
+const PORT = process.env.SUBMIT_PORT || 587;
+const HOST = process.env.SUBMIT_HOST || '192.168.1.40';
+
 function buildServer() {
   return new SMTPServer({
     banner: 'Submission Service',
@@ -60,3 +74,6 @@ function buildServer() {
     },
   });
 }
+
+buildServer().listen(process.env.SUBMIT_PORT || 587, process.env.SUBMIT_HOST || '192.168.1.40');
+
