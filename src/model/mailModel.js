@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
 const AttachmentSchema = new mongoose.Schema({
-  filename: String,
-  contentType: String,
-  size: Number,
-  url: String,             // Can store file URL or storage reference
+ filename: { type: String, required: true },
+  contentType: { type: String },
+  size: { type: Number },
+  contentDisposition: { type: String, default: 'attachment' },
+  checksum: { type: String },
+  url: { type: String, required: true }  // ✅ Public download link          // Can store file URL or storage reference
 });
 
 const EmailSchema = new mongoose.Schema({

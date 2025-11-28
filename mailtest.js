@@ -1,24 +1,24 @@
 // test-smtp-send.js
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 async function testSMTP() {
-    let transporter = nodemailer.createTransport({
-        host: "localhost",      // same as your SMTP server's host
-        port: 25,               // your SMTP port
-        secure: false,          // false for localhost or non-TLS test
-        tls: { rejectUnauthorized: false }, // Allow self-signed certificates
-    });
+  let transporter = nodemailer.createTransport({
+    host: "localhost", // same as your SMTP server's host
+    port: 25, // your SMTP port
+    secure: false, // false for localhost or non-TLS test
+    tls: { rejectUnauthorized: false }, // Allow self-signed certificates
+  });
 
-let info = await transporter.sendMail({
-        from: '"parminder singh" <parminder@kosh.com>',
-        to: "parminder@rajdoot.wtf",
-        subject: "Welcome to the Local SMTP Test Newsletter",
-        replyTo: "no-reply@example.com",
-        headers: {
-                "X-Mailer": "Nodemailer Local Test",
-                "List-Unsubscribe": "<mailto:unsubscribe@example.com>"
-        },
-        text: `Hi Parminder,
+  let info = await transporter.sendMail({
+    from: '"parminder singh" <parminder@kosh.com>',
+    to: "parminder@rajdoot.wtf",
+    subject: "Welcome to the Local SMTP Test Newsletter",
+    replyTo: "no-reply@example.com",
+    headers: {
+      "X-Mailer": "Nodemailer Local Test",
+      "List-Unsubscribe": "<mailto:unsubscribe@example.com>",
+    },
+    text: `Hi Parminder,
 
 Thank you for trying your local SMTP server. This message demonstrates:
 - Plain-text + rich HTML parts
@@ -45,7 +45,7 @@ Unsubscribe
 If you didn’t expect this, you can ignore it on a test system or remove your address from the script.
 
 — The Mail Test Bot`,
-        html: `<!doctype html>
+    html: `<!doctype html>
 <html>
 <body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;padding:20px;background:#0b1220;">
         <div style="max-width:840px;margin:0 auto;background:#081021;border:1px solid rgba(255,255,255,0.04);border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(2,6,23,0.6);">
@@ -95,25 +95,26 @@ If you didn’t expect this, you can ignore it on a test system or remove your a
         </div>
 </body>
 </html>`,
-        attachments: [
-                {
-                        filename: "logo.png",
-                        content: Buffer.from(
-                                "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAALElEQVQ4jWNgGAWjYBSMglEwCkZg1H8GQxGmYQ0wGgYB4YwEwz8G8TgAA8K4Kc1y1kq0AAAAASUVORK5CYII=",
-                                "base64"
-                        ),
-                        contentType: "image/png",
-                        cid: "logo@local"
-                },
-                {
-                        filename: "README.txt",
-                        content: "Nodemailer local SMTP test.\nThis file was attached to demonstrate attachments.\n",
-                        contentType: "text/plain"
-                }
-        ]
-});
+    attachments: [
+      {
+        filename: "logo.png",
+        content: Buffer.from(
+          "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAALElEQVQ4jWNgGAWjYBSMglEwCkZg1H8GQxGmYQ0wGgYB4YwEwz8G8TgAA8K4Kc1y1kq0AAAAASUVORK5CYII=",
+          "base64"
+        ),
+        contentType: "image/png",
+        cid: "logo@local",
+      },
+      {
+        filename: "README.txt",
+        content:
+          "Nodemailer local SMTP test.\nThis file was attached to demonstrate attachments.\n",
+        contentType: "text/plain",
+      },
+    ],
+  });
 
-    console.log("Message sent:", info.messageId);
+  console.log("Message sent:", info.messageId);
 }
 
 testSMTP().catch(console.error);
