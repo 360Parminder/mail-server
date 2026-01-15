@@ -1,0 +1,2 @@
+Nodemailer local SMTP test.
+This file was attached to demonstrate attachments.

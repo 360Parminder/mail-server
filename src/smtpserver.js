@@ -10,7 +10,7 @@ const allowedDomains = ["rajdoot.wtf", "example.com"]; // replace with your doma
 
 // File upload configuration
 const UPLOAD_DIR = path.join(__dirname, "..", "uploads");
-const BASE_URL = "https://rajdoot.wtf";
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });

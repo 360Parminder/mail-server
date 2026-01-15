@@ -3,7 +3,7 @@ const path = require('path');
 
 // Add near top of file with other requires
 const UPLOAD_DIR = path.join(__dirname, '..', 'uploads');
-const BASE_URL = 'http://localhost:8007'; // Change to your actual base URL
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 
 // Ensure uploads directory exists
 if (!fs.existsSync(UPLOAD_DIR)) {
